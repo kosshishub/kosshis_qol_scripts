@@ -1,8 +1,8 @@
 // ==UserScript==
-// @name         youtube_towatch_automremover
+// @name         youtube_towatch_autoremover
 // @namespace    http://tampermonkey.net/
 // @version      0.1
-// @description  Remove videos automatically from watch later
+// @description  Removes videos automatically from watch later when watched
 // @author       kosshi
 // @match        https://www.youtube.com/*
 // @grant        none
