@@ -1,0 +1,28 @@
+// ==UserScript==
+// @name         youtube_towatch_automremover
+// @namespace    http://tampermonkey.net/
+// @version      0.1
+// @description  Remove videos automatically from watch later
+// @author       kosshi
+// @match        https://www.youtube.com/*
+// @grant        none
+// ==/UserScript==
+
+console.log('Userscript active.');
+
+if(window.location.href.search('list=WL')>0){
+    console.log('The page is correct, document readystate is '+document.readyState);
+    if (document.readyState == 'complete') {
+        removeFromList();
+    } else {
+        console.log('Waiting for page to load...');
+        window.addEventListener('load', removeFromList);
+    }
+}
+
+function removeFromList(){
+    setTimeout( ()=>{
+        console.log('Removing video from playlist...');
+        document.querySelector('.currently-playing > a > button').click();
+    }, 2000 );
+}
