@@ -8,6 +8,10 @@
 // @grant        none
 // ==/UserScript==
 
+// NOTE: This script may not work for some people, google likes to enable 
+// styles and features only for some people, sometimes breaking this. 
+// Feel free to fork a version that works for you.
+
 (function(){
 	'use strict';
 	console.log('Towatch autoremover active.');
