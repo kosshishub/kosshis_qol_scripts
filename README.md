@@ -5,7 +5,7 @@
 A tampermonkey script. Removes videos from youtube's towatch list when watched (in the playlist)
 
 ## Chrome-plugin
-![an image](https://kosshi.fi/u/BGtn.png)
+![an image](https://kosshi.fi/u/sUrn.png)
 
 Also when you open it in a Twitter album, it opens the url of the current image in background.
 
