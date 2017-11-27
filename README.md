@@ -1,5 +1,5 @@
 # Random QOL scripts
-
+A small collection of random low-quality scripts that may or may not be worth sharing
 
 ## youtube_towatch_autoremover.js
 A tampermonkey script. Removes videos from youtube's towatch list when watched (in the playlist)
