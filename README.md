@@ -7,6 +7,7 @@ Probably only works with the old theme.
 
 ## Chrome-plugin
 ![an image](https://kosshi.fi/u/RGWd.png)
+
 Has few useful features for managing hundreds of tabs:
 - Lets you search for tabs
 - Can show and close duplicate tabs
