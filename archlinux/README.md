@@ -1,0 +1,1 @@
+Configs, bash scripts and stuff from my operating system
