@@ -1,1 +1,1 @@
-Configs, bash scripts and stuff from my operating system
+Configs, dotfiles, bash scripts and stuff from my operating system

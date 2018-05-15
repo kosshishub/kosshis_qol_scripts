@@ -1,5 +1,5 @@
 # Stuff
-A small collection of random low-quality scripts, configs and stuff that may or may not be worth sharing. 
+A small collection of random low-quality scripts, dotfiles, configs and stuff that may or may not be worth sharing. 
 
 ## Chrome-plugin
 ![an image](https://kosshi.fi/u/RGWd.png)

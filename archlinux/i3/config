@@ -117,6 +117,11 @@ workspace F2 output HDMI-A-1
 workspace F3 output HDMI-A-1
 workspace F4 output HDMI-A-1
 workspace F5 output HDMI-A-1
+workspace F6 output HDMI-A-1
+workspace F7 output HDMI-A-1
+workspace F8 output HDMI-A-1
+workspace F9 output HDMI-A-1
+workspace F10 output HDMI-A-1
 
 
 bindsym $mod+1 workspace 1
@@ -135,7 +140,11 @@ bindsym $mod+F2 workspace F2
 bindsym $mod+F3 workspace F3
 bindsym $mod+F4 workspace F4
 bindsym $mod+F5 workspace F5
-
+bindsym $mod+F6 workspace F6 
+bindsym $mod+F7 workspace F7 
+bindsym $mod+F8 workspace F8 
+bindsym $mod+F9 workspace F9 
+bindsym $mod+F10 workspace F10 
 
 # move focused container to workspace
 bindsym $mod+Shift+1  move container to workspace 1
@@ -154,7 +163,11 @@ bindsym $mod+Shift+F2 move container to workspace F2
 bindsym $mod+Shift+F3 move container to workspace F3
 bindsym $mod+Shift+F4 move container to workspace F4
 bindsym $mod+Shift+F5 move container to workspace F5
-
+bindsym $mod+Shift+F6 move container to workspace F6
+bindsym $mod+Shift+F7 move container to workspace F7
+bindsym $mod+Shift+F8 move container to workspace F8
+bindsym $mod+Shift+F9 move container to workspace F9
+bindsym $mod+Shift+F10 move container to workspace F10
 
 
 
@@ -222,6 +235,10 @@ bar {
 
 bindsym XF86AudioRaiseVolume exec amixer -c 1 sset Master 3%+
 bindsym XF86AudioLowerVolume exec amixer -c 1 sset Master 3%-
+
+bindsym Ctrl+XF86AudioRaiseVolume exec amixer -c 1 sset Master 1%+
+bindsym Ctrl+XF86AudioLowerVolume exec amixer -c 1 sset Master 1-
+
 bindsym XF86AudioPlay exec cmus-remote --pause
 bindsym XF86AudioNext exec cmus-remote --next
 bindsym XF86AudioPrev exec cmus-remote --prev
@@ -238,20 +255,19 @@ exec_always setxkbmap fi
 bindsym $mod+l exec "i3lock -eui ~/wallpaper.png; xset dpms force off"
 
 # I3-GAPS
-gaps inner 0
+gaps inner 15
 gaps outer 0
 smart_gaps on
 
-# for_window [class="^.*"] border pixel 0
+for_window [class="^.*"] border pixel 0
 
 # new_window normal 0 px
 # bindsym $mod+Shift+space "mark --add _; [con_mark=f] floating disable, border none, mark --add --toggle _; [con_mark=_] floating enable, border pixel 1; mark --add --toggle f;"
 bindsym $mod+Shift+space floating toggle
 
 # exec_always killall compton
-exec_always compton -f
+ exec_always compton
 
 exec_always xset dpms 240
-
 
 exec_always xset m 1 0
