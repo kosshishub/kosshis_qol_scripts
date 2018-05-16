@@ -50,58 +50,186 @@ do
 	else	netcolor="#8888ff";
 	fi
 
+
+
+
+
+
+	# CRYPTO
+
+	BTCUSDT_price=$(wget "localhost/binance?BTCUSDT&lastPrice" -q -O -);
+	BTCUSDT_change=$(wget "localhost/binance?BTCUSDT&priceChangePercent" -q -O -);
+
+	if	[ $(echo " $BTCUSDT_change < 0.00" | bc) -eq 1 ]
+	then 	BTCUSDT_change_color="#ff8888";
+	else	BTCUSDT_change_color="#8888ff";
+	fi
+
+
+
+	# CRYPTO
+
+	ETHUSDT_price=$(wget "localhost/binance?ETHUSDT&lastPrice" -q -O -);
+	ETHUSDT_change=$(wget "localhost/binance?ETHUSDT&priceChangePercent" -q -O -);
+
+	if	[ $(echo " $ETHUSDT_change < 0.00" | bc) -eq 1 ]
+	then 	ETHUSDT_change_color="#ff8888";
+	else	ETHUSDT_change_color="#8888ff";
+	fi
+
+
+
+
+
 	echo ",
-	[{
+	[
+
+
+	{
+		\"name\":			\"ETHUSDT_prefix\",
+		\"full_text\":		\"ETH \",
+		\"color\": 			\"#ffffff\",
+		\"background\": 	\"#000000\",
+		\"border\":		 	\"#000000\",
+		\"min_width\":	 	0,
+		\"align\":			\"right\",
+		\"separator\":		false,
+		\"separator_block_width\":0
+	},
+	{
+		\"name\":			\"ETHUSDTchange\",
+		\"full_text\":		\"$ETHUSDT_change % \",
+		\"color\": 			\"$ETHUSDT_change_color\",
+		\"background\": 	\"#000000\",
+		\"border\":		 	\"#000000\",
+		\"min_width\":	 	0,
+		\"align\":			\"right\",
+		\"separator\":		false,
+		\"separator_block_width\":0
+
+	},
+	{
+		\"name\":			\"ETHUSDT\",
+		\"full_text\":		\"$ETHUSDT_price $\",
+		\"color\": 			\"#ffffff\",
+		\"background\": 	\"#000000\",
+		\"border\":		 	\"#000000\",
+		\"min_width\":	 	66,
+		\"align\":			\"left\"
+	},
+
+
+
+	{
+		\"name\":			\"BTCUSDT_prefix\",
+		\"full_text\":		\"BTC \",
+		\"color\": 			\"#ffffff\",
+		\"background\": 	\"#000000\",
+		\"border\":		 	\"#000000\",
+		\"min_width\":	 	35,
+		\"align\":			\"right\",
+		\"separator\":		false,
+		\"separator_block_width\":0
+	},
+	{
+		\"name\":			\"BTCUSDTchange\",
+		\"full_text\":		\"$BTCUSDT_change % \",
+		\"color\": 			\"$BTCUSDT_change_color\",
+		\"background\": 	\"#000000\",
+		\"border\":		 	\"#000000\",
+		\"min_width\":	 	0,
+		\"align\":			\"right\",
+		\"separator\":		false,
+		\"separator_block_width\":0
+
+	},
+	{
+		\"name\":			\"BTCUSDT\",
+		\"full_text\":		\"$BTCUSDT_price $\",
+		\"color\": 			\"#ffffff\",
+		\"background\": 	\"#000000\",
+		\"border\":		 	\"#000000\",
+		\"min_width\":	 	66,
+		\"align\":			\"left\"
+	},
+
+
+	{
+		\"name\":			\"gpu_prefix\",
+		\"full_text\":		\"GPU \",
+		\"color\": 			\"#ffffff\",
+		\"background\": 	\"#000000\",
+		\"border\":		 	\"#000000\",
+		\"min_width\":	 	35,
+		\"align\":			\"right\",
+		\"separator\":		false,
+		\"separator_block_width\":0
+	},
+	{
 		\"name\":			\"temperature\",
-		\"full_text\":			\"GPU $gpu_temp 'C\",
+		\"full_text\":		\"$gpu_temp 'C \",
 		\"color\": 			\"$gpu_temp_color\",
-		\"background\": 		\"#000000\",
+		\"background\": 	\"#000000\",
 		\"border\":		 	\"#000000\",
-		\"min_width\":	 		50,
-		\"align\":			\"center\"
-	},{
+		\"min_width\":	 	0,
+		\"align\":			\"center\",
+		\"separator\":		false,
+		\"separator_block_width\":0
+
+	},
+	{
 		\"name\":			\"gpu\",
-		\"full_text\":			\"$gpu_clk_state MHz $gpu_fan RPM\",
+		\"full_text\":		\"$gpu_clk_state MHz $gpu_fan RPM\",
 		\"color\": 			\"#ffffff\",
-		\"background\": 		\"#000000\",
+		\"background\": 	\"#000000\",
 		\"border\":		 	\"#000000\",
-		\"min_width\":	 		125,
-		\"align\":			\"center\"
-	},{
+		\"min_width\":	 	105,
+		\"align\":			\"left\"
+	},
+
+
+
+
+	{
 		\"name\":			\"net\",
-		\"full_text\":			\"$ip\",
+		\"full_text\":		\"$ip\",
 		\"color\": 			\"$netcolor\",
-		\"background\": 		\"#000000\",
+		\"background\": 	\"#000000\",
 		\"border\":		 	\"#000000\",
-		\"min_width\":	 		90,
+		\"min_width\":	 	90,
 		\"align\":			\"center\"
-	},{
+	},
+	{
 		\"name\":			\"ram\",
-		\"full_text\":			\"$ram\",
+		\"full_text\":		\"$ram\",
 		\"color\": 			\"#ffffff\",
-		\"background\": 		\"#000000\",
+		\"background\": 	\"#000000\",
 		\"border\":		 	\"#000000\",
-		\"min_width\":	 		135,
+		\"min_width\":	 	135,
 		\"align\":			\"center\"
-	},{
+	},
+	{
 		\"name\":			\"clock\",
-		\"full_text\":			\"$clock MHz $cpu_temp 'C\",
+		\"full_text\":		\"$clock MHz $cpu_temp 'C\",
 		\"color\": 			\"#cccccc\",
-		\"background\": 		\"#000000\",
+		\"background\": 	\"#000000\",
 		\"border\":		 	\"#000000\"
-	},{
+	},
+	{
 		\"name\":			\"load\",
-		\"full_text\":			\"$load\",
+		\"full_text\":		\"$load\",
 		\"color\": 			\"$loadcolor\",
-		\"background\": 		\"#000000\",
+		\"background\": 	\"#000000\",
 		\"border\":		 	\"#000000\"
-	},{
+	},
+	{
 		\"name\":			\"date\",
-		\"full_text\":			\"$dt\",
+		\"full_text\":		\"$dt\",
 		\"color\": 			\"#cccccc\",
-		\"background\": 		\"#000000\",
+		\"background\": 	\"#000000\",
 		\"border\":		 	\"#000000\"
-	}]"
+	}
+	]"
 
 	sleep 1
 done
