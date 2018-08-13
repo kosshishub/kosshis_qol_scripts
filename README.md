@@ -2,7 +2,7 @@
 A small collection of random low-quality scripts, dotfiles, configs and stuff that may or may not be worth sharing. 
 
 ## Chrome-plugin
-![an image](https://kosshi.net/u/u3Wm.png)
+![an image](https://kosshi.net/u/NRcL.gif)
 
 Makes life as a tab hoarder easier:
 - Lets you search for opened tabs
