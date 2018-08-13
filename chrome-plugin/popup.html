@@ -3,12 +3,24 @@
 	<head>
 		<title>Popup</title>
 		<script src="commentstripper.js"></script>
+		
+
 		<script src="popup.js"></script>
+
+
+
 		<style type="text/css">
+			*{
+
+				margin: 0px 0px;
+				padding: 0px 0px;
+			}
+
 			html{
 				background: #000;
 				color: #aac;
 				width: 500px;
+				padding: 5px;
 				/*height: 200px;*/
 			}
 
@@ -16,25 +28,60 @@
 				background: rgba(20,20,20,100);
 			}
 
-			button.searchResult{
+			div.searchResult{
+				width: 100%;
+				
+				/*margin: 2px 2px;*/
+
+				padding: 0px 0px;
+				margin: 1px 0;
+				float: right;
+			}
+
+			div.searchResult>button.open{
+				width: calc(100% - 22px);
+				height: 32px;
+				text-align: left;
+				/*word-wrap: break-word;*/
+				white-space: nowrap;
+				float: right;
+				margin: 0px 0px;
+				padding: 0px 5px;
+				text-overflow: ellipsis;
+				overflow: hidden;
+			}
+			div.searchResult>button.close{
+				height: 32px;
+				/*width: 32px;*/
+				
+				width: auto;
 				text-align: left;
 				/*word-wrap: break-word;*/
 				white-space: nowrap;
 				float: left;
-				text-overflow: ellipsis;
+				position: absolute;
+				margin: 0px 0px;
+				padding: 0px 5px;
+
+				/*text-overflow: ellipsis;*/
 			}
 
-			button, input {
+			button {
 				width: 100%;
-
 				background: rgba(50,50,50,255);
 				border: none;
-				margin: 2px;
+				margin: 2px 0px;
 				color: #aac;
 			}
 
 			input {
 				padding: 5px;
+				
+				background: rgba(50,50,50,255);
+				border: none;
+				margin: 2px 0px;
+				color: #aac;
+				width: calc(100% - 10px);
 			}
 
 		</style>

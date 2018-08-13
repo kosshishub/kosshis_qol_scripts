@@ -1,21 +1,17 @@
 'use strict';
 
+const VERSION = "2.0";
+
 const session_json_header = "/*BROWSER_SESSION_JSON_KOSSHI_FI*/";
 const session_json_help = 
 `
 /*
 * Do not remove the comment above! Removing it will cause the extension to treat
 * this file as just urls seprated with newlines!
-* 
-* # File format
-*
-* Basic JSON. Root is an array of window objects. A window object is another 
-* array with urls in it. Thats it. 
-* Example: 
-* [ ["opens in window 1"], ["opens in window 2", "also opens in win2"] ]
 */
 
 `;
+/* globals chrome, CommentStripper*/
 
 const commentStripper = new CommentStripper();
 
@@ -71,12 +67,8 @@ function selectTab(id){
 	chrome.tabs.update(id, {selected:true});
 
 	chrome.tabs.get(id, (tab)=>{
-		// windowID
-		// console.log(tab);
 		chrome.windows.update(tab.windowId, {focused:true})
-
-	})
-
+	});
 }
 
 function print(txt){
@@ -120,11 +112,28 @@ function getDupeTabs( tabs, callback ){
 function createTabButton(tab){
 
 	let result = document.createElement('div');
+	result.className='searchResult';
 
 	let selectButton = document.createElement('button');
-	selectButton.className = "searchResult";
+	selectButton.className = "open";
 	selectButton.innerHTML = "<b>"+tab.title+"</b><br><i>" + tab.url + "</i>";
 	selectButton.onclick = ()=>{ console.log('select', tab.id); selectTab( tab.id ); };
+
+
+	let closeButton = document.createElement('button');
+	closeButton.className = "close";
+	closeButton.innerHTML = "X";
+	closeButton.onclick = ()=>{ 
+		
+		chrome.tabs.remove(tab.id, ()=>{
+			print('Success!'); 
+			result.parentNode.removeChild(result);
+
+		});
+	};
+
+
+	result.appendChild(closeButton);
 	result.appendChild(selectButton);
 
 	return result;
@@ -140,11 +149,13 @@ function main(){
 	<input type="text" id="tabSearch" placeholder="Search tabs"><br>
 	<div id="tabSearchResults"></div>
 	
-	<h2>Misc</h2>
-	<button id="logDupes">Show duplicate tabs</button>
-	<button id="closeDupesFromAll">    Close duplicate tabs from everywhere</button><br>
-	<button id="closeDupesFromCurrent">Close duplicate tabs from current window</button><br>
-	<button id="listDomain">List by domain</button>
+	<div id="misc">
+		<h2>Misc</h2>
+		<button id="logDupes">Show duplicate tabs</button>
+		<button id="closeDupesFromAll">    Close duplicate tabs from everywhere</button><br>
+		<button id="closeDupesFromCurrent">Close duplicate tabs from current window</button><br>
+		<button id="listDomain">List by domain</button>
+	</div>
 
 	<h2>Session managment</h2>
 	<button id="sessionSaveCurrent">Download session file (Window)</button><br>
@@ -169,19 +180,15 @@ function main(){
 
 		allTabs( (tabs)=>{
 			for (var i = 0; i < tabs.length; i++) {
-				let tab = tabs[i]
-				if( tabs[i].title.toUpperCase().search(term) > 0 || 
-					tabs[i].url.toUpperCase().search(term) > 0
+				let tab = tabs[i];
+				if( tabs[i].title.toUpperCase().search(term) > -1 || 
+					tabs[i].url.toUpperCase().search(term) > -1
 				) {
 					resultElem.appendChild(createTabButton(tab));
 				}
 			}
 		} );
-
-
-
-
-	}
+	};
 
 	document.querySelector('#listDomain').onclick     = ()=>{
 		let domains = {};
@@ -204,6 +211,16 @@ function main(){
 
 	document.querySelector('#closeDupesFromCurrent').onclick = ()=>{
 		currentWindowTabs((tabs)=>{
+			getDupeTabs(tabs, (deletionIDList, uniqueCount)=>{
+				console.log(deletionIDList);
+				print(`Closing ${deletionIDList.length} tabs...`);
+				chrome.tabs.remove(deletionIDList, ()=>print('Success!'));
+			});
+		});
+	};
+
+	document.querySelector('#closeDupesFromAll').onclick = ()=>{
+		allTabs((tabs)=>{
 			getDupeTabs(tabs, (deletionIDList, uniqueCount)=>{
 				console.log(deletionIDList);
 				print(`Closing ${deletionIDList.length} tabs...`);
@@ -251,23 +268,11 @@ function main(){
 		});
 	};
 
-	// document.querySelector('#sessionSaveCurrent').onclick     = ()=>{
-	// 	currentWindowTabs((tabs)=>{
-	// 		let file = "";
-	// 		for (var i = 0; i < tabs.length; i++) {
-	// 			file += fixurl(tabs[i].url) + "\n";
-	// 		}
-	// 		downloadText(file);
-
-	// 	});
-	// };
-
 	document.querySelector('#logDupes').onclick = ()=>{
 		
-
 		console.log("0");
 
-		currentWindowTabs((tabs)=>{
+		allTabs((tabs)=>{
 			console.log("1");
 			getDupeTabs(tabs, (deletionIDList, uniqueCount, delURL, duplicateTabIDs)=>{
 
@@ -321,20 +326,30 @@ function main(){
 	chrome.tabs.executeScript(null, {
 		file: "twittermedia.js"
 	});
-		
 
-
+	chrome.tabs.query({audible:true}, (t)=>{
+		for (var i = 0; i < t.length; i++) {
+			document.querySelector("#tabSearchResults").appendChild(createTabButton(t[i]));
+		}
+	});
 
 	currentWindowTabs((tabs)=>{
 		getDupeTabs( tabs, (deletionIDList, uniqueCount)=>{
-			print(`In current window:<br> ${tabs.length} tabs, ${deletionIDList.length} dupes and ${uniqueCount} uniques.`);
+			print(`In current window:<br> ${tabs.length} tabs, ${deletionIDList.length} duplicates`);
 		});
 	});
 	allTabs((tabs)=>{
 		getDupeTabs( tabs, (deletionIDList, uniqueCount)=>{
-			print(`In all windows:<br> ${tabs.length} tabs, ${deletionIDList.length} dupes and ${uniqueCount} uniques.`);
+			chrome.windows.getAll(w=>{
+				print(`In all windows (${w.length} in total):<br> ${tabs.length} tabs, ${deletionIDList.length} duplicates`);
+			});
 		});
 	});
+
+	if(window.modules)
+	for (var i = 0; i < window.modules.length; i++) {
+		window.modules[i]();
+	}
 
 }
 
