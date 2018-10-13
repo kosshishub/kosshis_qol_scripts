@@ -8,3 +8,4 @@ cp -v	~/.config/compton.conf 		./compton.conf
 cp -v	~/.vimrc					./.vimrc
 cp -rv	~/.config/i3 				.
 cp -rv	~/script/i3bar/ 			.
+cp -rv  ~/script/xrandr/			.

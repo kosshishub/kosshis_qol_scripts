@@ -149,23 +149,53 @@ function main(){
 	<input type="text" id="tabSearch" placeholder="Search tabs"><br>
 	<div id="tabSearchResults"></div>
 	
-	<div id="misc">
-		<h2>Misc</h2>
 		<button id="logDupes">Show duplicate tabs</button>
-		<button id="closeDupesFromAll">    Close duplicate tabs from everywhere</button><br>
-		<button id="closeDupesFromCurrent">Close duplicate tabs from current window</button><br>
-		<button id="listDomain">List by domain</button>
+		<button id="showAdvanced">More</button>
+	
+	<div id="backup">
+		<h2>Export pocket</h2>
+		<button id="exportPocket">Download pocket as JSON</button><br>
+		<h2>Import pocket</h2>
+		<input id="importPocket" type="file"/>	
+		<p>Note: Importing will merge the json file with current pocket</p>
 	</div>
 
-	<h2>Session managment</h2>
-	<button id="sessionSaveCurrent">Download session file (Window)</button><br>
-	<button id="sessionSaveGlobal" >Download session file (Global)</button>
-	<br>Import session file: <input id="file" type="file"/>
+	<div id="advanced">
+		<div id="misc">
+			<h2>Advanced</h2>
+			<button id="closeDupesFromAll">    Close duplicate tabs from everywhere</button><br>
+			<button id="closeDupesFromCurrent">Close duplicate tabs from current window</button><br>
+			<button id="listDomain">List by domain</button>
+		</div>
+		<h2>Old JSON Session managment</h2>
+		<button id="sessionSaveCurrent">Download session file (Window)</button><br>
+		<button id="sessionSaveGlobal" >Download session file (Global)</button>
+		<br>Import session file: <input id="file" type="file"/>
+	</div>
+
+	<h2>Pocket</h2>
+	<button id="pocketWindow">Save current window</button>
+	<button id="showBackup">Import/Export</button>
+
+	<div id="pocket">
+	</div>
+
 	<br>
 	<br>Log:
 	<div id="log"></div>
 	`;
-
+	
+	let advanced = document.querySelector( '#advanced'  );
+	advanced.style.display='none';
+	document.querySelector( '#showAdvanced'  ).onclick = ()=>{
+		advanced.style.display='block';
+	}
+	
+	let backup = document.querySelector( '#backup'  );
+	backup.style.display='none';
+	document.querySelector( '#showBackup').onclick = ()=>{
+		backup.style.display='block';
+	}
 
 	document.querySelector('#tabSearch').oninput = ()=>{
 		let elem = document.querySelector('#tabSearch');
@@ -324,7 +354,7 @@ function main(){
 		}
 	});
 	chrome.tabs.executeScript(null, {
-		file: "twittermedia.js"
+		file: "front/twittermedia.js"
 	});
 
 	chrome.tabs.query({audible:true}, (t)=>{

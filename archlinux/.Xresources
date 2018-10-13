@@ -8,11 +8,11 @@ urxvt*background: [75]#000000
 *foreground: #aaaaaa
 
 
-URxvt.perl-ext-common: selection-to-clipboar
+URxvt.perl-ext-common: selection-to-clipboard
 
 
 *color0:  #2E3436
-*color1:  #a40000
+*color1:  #a47070
 *color2:  #4E9A06
 *color3:  #C4A000
 *color4:  #3465A4
@@ -26,4 +26,4 @@ URxvt.perl-ext-common: selection-to-clipboar
 *color12: #729FCF
 *color13: #AD7FA8
 *color14: #fcaf3e
-*color15: #EEEEECd
+*color15: #EEEECd
