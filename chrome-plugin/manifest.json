@@ -3,7 +3,7 @@
 
   "name": "Kosshis automations",
   "description": "All sorts of quality of life improvements",
-  "version": "2.0",
+  "version": "2.1",
 
   "browser_action": {
     "default_icon": "icon.png",

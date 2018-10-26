@@ -197,7 +197,9 @@ function main(){
 		backup.style.display='block';
 	}
 
-	document.querySelector('#tabSearch').oninput = ()=>{
+	let	search = document.querySelector('#tabSearch');
+	search.focus();
+	search.oninput = ()=>{
 		let elem = document.querySelector('#tabSearch');
 		let resultElem = document.querySelector('#tabSearchResults');
 
@@ -301,7 +303,8 @@ function main(){
 	document.querySelector('#logDupes').onclick = ()=>{
 		
 		console.log("0");
-
+		
+		document.querySelector("#tabSearchResults").innerHTML="";
 		allTabs((tabs)=>{
 			console.log("1");
 			getDupeTabs(tabs, (deletionIDList, uniqueCount, delURL, duplicateTabIDs)=>{
