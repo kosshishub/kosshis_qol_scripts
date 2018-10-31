@@ -1,0 +1,8 @@
+pcm.!default {
+type pulse
+hint.description "Default Audio Device"
+}
+
+ctl.!default {
+type pulse
+}

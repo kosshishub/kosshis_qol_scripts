@@ -1,29 +1,54 @@
+!use "xrdb .Xresources" to reload
+
 URxvt.scrollBar: false
-URxvt.font: xft:Consolas:size=10
-URxvt.letterSpace: -1
+!URxvt.font:      -xos4-terminus-medium-r-normal--12-120-72-72-c-60-iso10646-1
+!URxvt.font: xft:Consolas:pixelsize=12
+! URxvt.font: 
+!URxvt.font: -gohu-gohufont-bold-r-normal--14-100-100-100-c-80-iso10646-1
+! URxvt.letterSpace: -1
+! URxvt.font: 		 	-*-terminus-medium-r-*-*-12-*-*-*-*-*-*-*
+! urxvt*depth: 32
 
-urxvt*depth: 32
-urxvt*background: [75]#000000
+! URxvt*font: -gohu-gohufont-medium-r-normal--14-100-100-100-c-80-iso10646-1
+! URxvt*font: -xos4-terminus-medium-r-normal--14-140-72-72-c-80-iso10646-1
 
-*foreground: #aaaaaa
+URxvt.font: -xos4-terminus-medium-r-normal--12-120-72-72-c-60-iso10646-1
 
+urxvt*transparent: true
+urxvt*shading: 10
+
+*foreground: #888888
+
+URxvt.secondaryScreen: 1
+URxvt.secondaryScroll: 0
 
 URxvt.perl-ext-common: selection-to-clipboard
 
-
-*color0:  #2E3436
-*color1:  #a47070
-*color2:  #4E9A06
-*color3:  #C4A000
-*color4:  #3465A4
+! GRAY
+*color0:  #333333 
+! RED
+*color1:  #aa7070
+! GREEN
+*color2:  #668866
+! YELLOW
+*color3:  #999966
+! BLUE
+*color4:  #666688
+! MAGENTA
 *color5:  #75507B
-*color6:  #ce5c00
-*color7:  #babdb9
-*color8:  #555753
-*color9:  #EF2929
-*color10: #8AE234
-*color11: #FCE94F
+! ORANGE
+*color6:  #aa5544
+! WHITE
+*color7:  #888888
+
+*color8:  #555555
+*color9:  #CC7070
+*color10: #669966
+*color11: #AAAA66
 *color12: #729FCF
 *color13: #AD7FA8
 *color14: #fcaf3e
-*color15: #EEEECd
+*color15: #BBBBBB
+
+
+
