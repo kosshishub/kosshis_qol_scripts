@@ -1,0 +1,41 @@
+#!/bin/sh
+VAR=~/bin/var;
+
+if mount | grep $VAR > /dev/null; then
+	xsetroot -name "\x5Uncleanly exited?";
+	echo "1" > $VAR/kill;
+	sleep 3;
+	sudo umount $VAR;
+fi
+
+sudo mount -t tmpfs -o size=64k tmpfs $VAR;
+
+touch $VAR/toast;
+touch $VAR/locked;
+touch $VAR/kill;
+
+while true; do
+	
+	locked="$(cat $VAR/locked)";
+	[ ! -z "$locked" ] && continue
+
+	kill="$(cat $VAR/kill)";
+	[ ! -z "$kill" ] && break
+
+	toast="$(cat $VAR/toast)";
+
+	if [ ! -z "$toast" ]
+	then
+		xsetroot -name "$toast";
+		echo "" > $VAR/toast;
+		sleep 4;
+	else
+		xsetroot -name "$(~/bin/status/status)";
+	fi
+
+	sleep 1;
+done
+
+xsetroot -name "\x5Status killed";
+
+sudo umount $VAR;

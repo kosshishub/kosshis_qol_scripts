@@ -1,0 +1,78 @@
+#!/bin/sh
+
+free=$(free -m  | grep ^Mem | tr -s ' ' | cut -d ' ' -f 7)
+total=$(free -m  | grep ^Mem | tr -s ' ' | cut -d ' ' -f 2)
+used=$(free -m  | grep ^Mem | tr -s ' ' | cut -d ' ' -f 3)
+
+#used=$((total-free))
+
+bar=$(~/bin/status/bar/bar $free $total)
+
+dt=$(date '+%a %d/%m/%Y %H:%M:%S');
+
+load="$( cat /proc/loadavg | cut -d ' ' -f 1 )";
+
+clock="$(lscpu | grep "CPU MHz" | tr -s ' ' | cut -d ' ' -f 3 | cut -d '.' -f 1)";
+
+#cpu_temp="$( "/sys/class/hwmon/hwmon0/temp1_input" )";
+#cpu_temp=cpu_temp/1000;
+
+gpu_temp_raw=$(cat /sys/class/drm/card0/device/hwmon/hwmon1/temp1_input);
+gpu_fan=$(cat /sys/class/drm/card0/device/hwmon/hwmon1/fan1_input);
+
+gpu_temp=$((gpu_temp_raw/1000)) 
+
+gpu_mem_state=$(cat /sys/class/drm/card0/device/pp_dpm_mclk | grep "*" | cut -d ' ' -f 2 | cut -d 'M' -f 1); 
+gpu_pci_state=$(cat /sys/class/drm/card0/device/pp_dpm_pcie | grep "*" | cut -d ' ' -f 2 | cut -d 'M' -f 1);
+gpu_clk_state=$(cat /sys/class/drm/card0/device/pp_dpm_sclk | grep "*" | cut -d ' ' -f 2 | cut -d 'M' -f 1);
+
+
+cpu_temp_raw=$(cat /sys/class/hwmon/hwmon0/temp1_input);
+cpu_temp=$((cpu_temp_raw/1000));
+
+DEF="0"
+DARK="2"
+BLUE="3";
+YELLOW="4";
+RED="5";
+
+
+if	[ $(echo " $load > 8.00" | bc) -eq 1 ]
+then 	loadcolor=$RED;
+elif 	[ $(echo " $load > 4.00" | bc) -eq 1 ]
+then	loadcolor=$YELLOW;
+else	loadcolor=$BLUE;
+fi
+
+
+if	[ $(echo " $gpu_temp > 60.00" | bc) -eq 1 ]
+then 	gpu_temp_color=$RED;
+elif 	[ $(echo " $gpu_temp > 45.00" | bc) -eq 1 ]
+then	gpu_temp_color=$YELLOW;
+else	gpu_temp_color=$BLUE;
+fi
+
+if	[ $(echo " $cpu_temp > 60.00" | bc) -eq 1 ]
+then 	cpu_temp_color=$RED;
+elif 	[ $(echo " $cpu_temp > 45.00" | bc) -eq 1 ]
+then	cpu_temp_color=$YELLOW;
+else	cpu_temp_color=$BLUE;
+fi
+
+if	[ $(echo " $used > 12000" | bc) -eq 1 ]
+then 	ram_color=$RED;
+elif 	[ $(echo " $used > 8000" | bc) -eq 1 ]
+then	ram_color=$YELLOW;
+else	ram_color=$BLUE;
+fi
+
+used=$(printf '%5s' "$used")
+clock=$(printf '%4s' "$clock")
+gpu_clk_state=$(printf '%4s' "$gpu_clk_state")
+
+echo "\x$DEF  \
+GPU \x$gpu_temp_color$gpu_temp \x$DEF'C \x$DEF$gpu_clk_state MHz \x$DARK|\x$DEF \
+CPU \x$cpu_temp_color$cpu_temp \x$DEF'C \x$DEF$clock MHz \x$DARK|\x$DEF \
+$bar \x$ram_color$used\x$DEF M \x$DARK|\x$DEF \
+$dt \x$DARK|\x$DEF \
+\x$loadcolor$load ";

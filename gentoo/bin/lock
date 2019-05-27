@@ -1,0 +1,13 @@
+VAR=~/bin/var;
+
+~/bin/status/toast "Locking..." &
+echo "1" > $VAR/locked;
+
+sleep 0.5; 
+
+xset dpms force off; 
+
+slock;
+
+~/bin/status/toast "Unlocked";
+echo "" > $VAR/locked;

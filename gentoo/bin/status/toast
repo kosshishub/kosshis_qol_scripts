@@ -1,0 +1,4 @@
+VAR=~/bin/var;
+
+echo "$1" > $VAR/toast;
+xsetroot -name "$(cat $VAR/toast)";

@@ -1,0 +1,8 @@
+maim -sf png > /tmp/screenshot.png;
+cancelled=$?;
+if [ "$cancelled" -eq "0" ] 
+then
+	~/bin/upload /tmp/screenshot.png;
+else
+	~/bin/status/toast "Cancelled";
+fi

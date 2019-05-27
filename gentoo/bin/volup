@@ -1,0 +1,1 @@
+amixer -c 1 sset Master 3%+

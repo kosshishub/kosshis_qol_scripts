@@ -1,0 +1,12 @@
+#!/bin/bash
+PASSWD=$(cat ~/auth/uploadkey)
+GET=$(curl -o /dev/null -F "file=@$1" https://kosshi.net/u/$PASSWD/upload -Lw "%{http_code} %{url_effective}" )
+STATUS=( $GET );
+
+if [ "${STATUS[0]}" == "200" ]; then
+	echo ${STATUS[1]} | xclip -sel clip;
+	~/bin/status/toast ${STATUS[1]} &
+else
+	~/bin/status/toast "ERROR: Server responded with ${STATUS[0]}" &
+fi
+

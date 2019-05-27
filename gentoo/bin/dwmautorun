@@ -1,0 +1,25 @@
+#!/bin/sh
+
+# This file must be reloadable without restarting dwm/x11.
+
+# urxvt prettiness
+xrdb ~/.Xresources; 
+
+# keyboard layout
+setxkbmap fi;
+
+# custom script to apply window layout
+~/bin/xrandr/apply.sh;
+
+# Desktop wallpaper
+feh --bg-fill --no-xinerama ~/wallpaper.png;
+
+# Shut displays after idle
+xset dpms 240;
+
+# Network
+sudo dhcpcd;
+
+# bar
+
+~/bin/status/main &
